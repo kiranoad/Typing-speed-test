@@ -190,8 +190,6 @@ function getData() {
     console.log("correctWordsTyped: ",correctWordEl,correctWordsTyped);
   }
 
-
-  <i class="fas fa-star-of-david df  "></i>
   console.log({inCorrectWordsTyped, correctWordsTyped})
 }
 
