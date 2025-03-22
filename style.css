@@ -1,0 +1,185 @@
+:root{
+    --bgColor:#333;
+    --textPrimary: #fff;
+    --textSecondary:#666;
+    --PrimaryColor:#ff7200;
+
+}
+
+body{
+    /* font-family: "Monospace", Courier; */
+    background-color: var(--bgColor);
+    color: var(--textPrimary);
+    font-size: 1.4rem;
+    
+
+}
+main{
+    text-align: center;
+    margin: 50px auto;
+}
+h4{
+    font-size: medium;
+    font-family: 'Trebuchet MS';
+    font-weight: 200;
+}
+h1{
+    color: var(--PrimaryColor);
+
+}
+h1 svg{
+    width: 40px;
+    color:#ff7200;
+}
+
+#header{
+    display: flex;
+    justify-content: space-between;
+    margin: 5% 10%;
+    grid-template-columns: 2fr 0fr;
+    margin-bottom: 90px;
+    
+
+}
+#buttons{
+    margin: 30px;
+    width: 110px;
+    height: 50px;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: #666;
+   border: 1px dotted var(--PrimaryColor);
+
+   
+
+}
+#buttons:hover:active{
+    background-color: rgb(195, 194, 194);
+    color: #333;
+    transform:scaleY();
+    translate: 1s;
+    
+}
+
+#timer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 100px;
+    font-size: 35px;
+    color: #fff;
+    background-color: var(--bgColor);
+    border-radius: 50%;
+    border: 3px solid var(--PrimaryColor);
+}
+#timer span{
+    color: #ffcc15ed;
+}
+
+.otherFeature{
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    font-size: 25px;
+}
+.otherFeature span{
+    font-size: medium;
+}
+#WPM{
+    margin-right: 20px;
+}
+#currectChars{
+    margin-right: 20px;
+}
+#currectWord{
+    margin-right: 20px;
+}
+#incurrectWord{
+    margin-right: 20px;
+}
+#makeCurrectWord{
+    margin-right: 20px;
+}
+#accuracy{
+    margin-right: 20px;
+}
+button{
+    background-color: rgba(255, 255, 255, .2);
+    cursor: pointer;
+    color: var(--PrimaryColor);
+}
+div#game{
+    margin: 0 10%;
+    line-height: 35px;
+    height: 105px;
+    overflow: hidden;
+    position: relative;
+    font-family: "Monospace", Courier;
+}
+#words{
+    filter: blur(5px);
+    color: var(--textSecondary);
+}
+
+#game:focus #words{
+    filter: blur(0);
+}
+
+#focus_error{
+    text-align: center;
+    position: absolute;
+    inset: 0;
+    padding-top: 35px;
+    
+}
+#game:focus #focus_error{
+    display: none;
+}
+
+div.word{
+    display: inline-block;
+    /* margin: 0 5px; */
+}
+.letter.correct{
+    color: #fff;
+}
+.letter.incorrect{
+    color: red;
+}
+@keyframes blink {
+    0%{
+        opacity: 1;
+    }
+    50%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+.letter.current {
+    /* width: 2px;
+    height: 1.4rem;
+    background: var(--PrimaryColor);
+    position: fixed;
+    animation: blink .5s infinite; */
+    text-decoration: underline;
+}
+
+
+/* #cursor{
+    display: none;
+    width: 2px;
+    height: 1.6rem;
+    background: var(--PrimaryColor);
+    position: fixed;
+    top: 285px;
+    left: 153px;
+    
+/* } */
+/* #game:focus .letter.correct{ */
+    /* display: block; */
+/* } */ 

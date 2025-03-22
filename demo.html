@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Negative Countdown Timer</title>
+</head>
+<body>
+    <h1>Negative Countdown Timer</h1>
+    <p id="timer"></p>
+
+    <script>
+        let start = 10; // Starting number
+        const timerElement = document.getElementById('timer');
+
+        function updateTimer() {
+            timerElement.textContent = `Time: -${start}s`;
+            start--;
+
+            if (start < 0) {
+                clearInterval(interval);
+                timerElement.textContent = "Time's up!";
+            }
+        }
+
+        const interval = setInterval(updateTimer, 1000); // Update every second
+    </script>
+</body>
+</html>
