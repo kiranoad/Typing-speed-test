@@ -27,10 +27,26 @@ function formatWord(word) {
             </div>`;
 }
 
-let timeStart = 10; // Timer starts from 10 seconds
-let timerRunning = false; // Initial timer condition
-let gameOver = false; // Timer over flag
-let typedWords = 0;
+let timeStart; // Timer starts from 10 seconds
+let timerRunning; // Initial timer condition
+let gameOver; // Timer over flag
+let typedWords;
+
+
+function reset() {
+  console.log("Reset Called");
+  timeStart = 3;
+  timerRunning = false;
+  gameOver = false;
+  document.getElementById("focus_error").textContent = "Check Typing";
+  const timerElement = document.getElementById("timer");
+  document.getElementById("words").style.filter = 'blur(0)';
+
+  timerElement.textContent = `${timeStart}s`;
+}
+
+window.addEventListener("load", reset);
+
 
 function newGame() {
   // document.getElementById("words").innerHTML = ""; // Clear words
@@ -40,14 +56,14 @@ function newGame() {
   }
   addClass(document.querySelector(".word"), "current");
   addClass(document.querySelector(".letter"), "current");
-  timeStart = 10;
+  timeStart = 3;
   timerRunning = false;
   gameOver = false;
   typedWords = 0;
   // document.getElementById("WPM").textContent = "WPM: 0"; // Reset WPM
 }
 
-document.getElementById("game").addEventListener("click", onClick);
+document.getElementById("game").addEventListener("click", onClickTyping);
 
 document.getElementById("game").addEventListener("keydown", (ev) => {
   if (gameOver) return; // Stop typing when time is over
@@ -112,8 +128,11 @@ function startTimer() {
     if (timeStart < 0) {
       clearInterval(interval);
       timerElement.textContent = "00s";
-      gameOver = true;
+      gameOver = true;  
       document.getElementById("focus_error").textContent = "Time over";
+      document.getElementById("focus_error").style.display = 'block';
+      document.getElementById("words").style.filter = 'blur(5px)';
+
       showResults();
     }
   }
@@ -130,11 +149,18 @@ function showResults() {
 }
 
 // Button Reload Active
-document.getElementById("buttons").addEventListener("click", onClick);
+document.getElementById("tryAgian").addEventListener("click", onClickTryAgain);
 
-function onClick() {
-  console.log("Try/ Words Again clicked");
+function onClickTyping() {
+  console.log("Typing Clicked");
+
+  document.getElementById("focus_error").style.display = 'none';
+  document.getElementById("words").style.filter = 'blur(0)';
+
   newGame();
-  
+}
 
+function onClickTryAgain() {
+  reset()
+  newGame();
 }
