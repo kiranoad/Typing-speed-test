@@ -34,7 +34,8 @@ let typedWords = 0;
 
 function newGame() {
   // document.getElementById("words").innerHTML = ""; // Clear words
-  for (let i = 0; i < 200; i++) {
+  document.getElementById("words").innerHTML = '';
+  for (let i = 0; i < 100; i++) {
     document.getElementById("words").innerHTML += formatWord(getRandomWord());
   }
   addClass(document.querySelector(".word"), "current");
@@ -132,7 +133,7 @@ function showResults() {
 document.getElementById("buttons").addEventListener("click", onClick);
 
 function onClick() {
-  console.log("Try Again clicked");
+  console.log("Try/ Words Again clicked");
   newGame();
   
 
