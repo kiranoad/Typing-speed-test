@@ -4,11 +4,11 @@ const words =
 const wordArray = words.split(/\s+/);
 
 function addClass(el, name) {
-  el.className += " " + name;
+  el.classList.add(name);
 }
 
 function removeClass(el, name) {
-  el.className = el.className.replace(name, "");
+  el.classList.remove(name);
 }
 
 function getRandomWord() {
@@ -27,17 +27,26 @@ function formatWord(word) {
             </div>`;
 }
 
+const TOTAL_TIMEER = 60
+
 let timeStart; // Timer starts from 10 seconds
 let timerRunning; // Initial timer condition
 let gameOver; // Timer over flag
-let typedWords;
+let correctWordsTyped;
+let inCorrectWordsTyped;
+let totalWordsTyped;
+let curectLetter;
+let totalLetter;
+
 
 
 function reset() {
-  console.log("Reset Called");
-  timeStart = 3;
+  timeStart = TOTAL_TIMEER;
   timerRunning = false;
   gameOver = false;
+  correctWordsTyped= 0;
+  inCorrectWordsTyped = 0;
+  totalWordsTyped = 0;
   document.getElementById("focus_error").textContent = "Check Typing";
   const timerElement = document.getElementById("timer");
   document.getElementById("words").style.filter = 'blur(0)';
@@ -56,16 +65,19 @@ function newGame() {
   }
   addClass(document.querySelector(".word"), "current");
   addClass(document.querySelector(".letter"), "current");
-  timeStart = 3;
-  timerRunning = false;
-  gameOver = false;
-  typedWords = 0;
+  reset();
+  // timeStart = 3;
+  // timerRunning = false;
+  // gameOver = false;
+  // correctWordsTyped = 0;
+  // totalWordsTyped = 0;
   // document.getElementById("WPM").textContent = "WPM: 0"; // Reset WPM
 }
 
 document.getElementById("game").addEventListener("click", onClickTyping);
 
 document.getElementById("game").addEventListener("keydown", (ev) => {
+  showResults();
   if (gameOver) return; // Stop typing when time is over
 
   if (!timerRunning) {
@@ -91,7 +103,8 @@ document.getElementById("game").addEventListener("keydown", (ev) => {
   }
 
   const expected = currentLetter.innerHTML;
-  if (key === expected) {
+
+  if (key === expected || (key === " " && expected === "&nbsp;")) {
     addClass(currentLetter, "correct");
   } else {
     addClass(currentLetter, "incorrect");
@@ -102,10 +115,27 @@ document.getElementById("game").addEventListener("keydown", (ev) => {
   if (currentLetter.nextSibling && currentLetter.nextSibling.tagName === "SPAN") {
     addClass(currentLetter.nextSibling, "current");
   } else {
-    // Word is completed
-    if (!currentWord.querySelector(".incorrect")) {
-      typedWords++; // Increment only if word is typed correctly
+  const letters = currentWord.getElementsByClassName("letter");
+  let isWordIncorrect = false;
+  Array.from(letters).forEach(letter=>{
+    if(Array.from(letter.classList).some(cl => cl ==="incorrect")){
+      isWordIncorrect = true;
     }
+  })
+  // addClass(currentWord, "correct");
+  if(isWordIncorrect === false){
+    addClass(currentWord, "correctWord");
+    // correctWordsTyped++;
+  }
+  else {
+    addClass(currentWord, "incorrectWord");
+  }
+  // totalWordsTyped++;
+
+    // Word is completed
+    // if (!currentWord.querySelector(".incorrect")) {
+    //   correctWordsTyped++; // Increment only if word is typed correctly
+    // }
 
     removeClass(currentWord, "current");
 
@@ -140,19 +170,43 @@ function startTimer() {
   const interval = setInterval(updateTimer, 1000); // Update every second
 }
 
+function getData() {
+  // const words = document.querySelector(".word");
+  // if(!words){
+  //   return;
+  // }
+
+
+
+  const incorrectWordEl = document.querySelectorAll(".word.incorrectWord")
+  if(incorrectWordEl){
+    inCorrectWordsTyped = Array.from(incorrectWordEl).length
+    console.log("inCorrectWordsTypedL: ",incorrectWordEl,inCorrectWordsTyped);
+  }
+  
+  const correctWordEl = document.querySelectorAll(".word.correctWord")
+  if(correctWordEl){
+    correctWordsTyped = Array.from(correctWordEl).length
+    console.log("correctWordsTyped: ",correctWordEl,correctWordsTyped);
+  }
+
+  console.log({inCorrectWordsTyped, correctWordsTyped})
+}
+
 // Show Results Function
 function showResults() {
-  const wpm = Math.round((typedWords * 60) / 10);
+  getData();
+  const wpm = Math.floor((correctWordsTyped / (TOTAL_TIMEER - timeStart)) * 60);
 
-  console.log(wpm);
   document.getElementById("WPM").textContent = `WPM: ${wpm}`;
+  document.getElementById("currectWord").textContent = `CW: ${correctWordsTyped}`;
+  document.getElementById("incurrectWord").textContent = `ICW: ${inCorrectWordsTyped}`;
 }
 
 // Button Reload Active
 document.getElementById("tryAgian").addEventListener("click", onClickTryAgain);
 
 function onClickTyping() {
-  console.log("Typing Clicked");
 
   document.getElementById("focus_error").style.display = 'none';
   document.getElementById("words").style.filter = 'blur(0)';
@@ -164,3 +218,23 @@ function onClickTryAgain() {
   reset()
   newGame();
 }
+
+
+
+
+
+
+
+
+
+
+// displayWords = ["the", "sdf"];
+// typredWord = "The sde fgfdg"
+
+
+
+
+
+// render(){
+
+// }

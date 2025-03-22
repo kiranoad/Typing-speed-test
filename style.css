@@ -143,6 +143,16 @@ div.word{
     display: inline-block;
     /* margin: 0 5px; */
 }
+div.word.correctWord {
+    color: "green" !important;
+    font-weight: bold;
+    text-decoration: underline dotted green;
+}
+div.word.incorrectWord {
+    color: "blue" !important; 
+    text-decoration: line-through;
+
+}
 .letter.correct{
     color: #fff;
 }
